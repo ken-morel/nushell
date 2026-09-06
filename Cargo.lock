@@ -5298,6 +5298,7 @@ dependencies = [
  "tempfile",
  "thiserror 2.0.20",
  "typetag",
+ "uuid",
  "web-time",
  "windows 0.62.2",
  "windows-sys 0.61.2",
@@ -7659,7 +7660,7 @@ dependencies = [
 [[package]]
 name = "reedline"
 version = "0.51.0"
-source = "git+https://github.com/nushell/reedline?branch=main#a8e93641b927600fb49f71525b39585cb5410273"
+source = "git+https://github.com/ken-morel/reedline.git?branch=main#a3f9738e238e82ca89eee2a678130e6913af3adf"
 dependencies = [
  "arboard",
  "chrono",
@@ -7676,6 +7677,7 @@ dependencies = [
  "unicase",
  "unicode-segmentation",
  "unicode-width 0.2.2",
+ "uuid",
 ]
 
 [[package]]

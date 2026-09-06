@@ -1312,11 +1312,13 @@ fn setup_history(
     line_editor: Reedline,
     history: HistoryConfig,
 ) -> Result<Reedline> {
-    // Setup history_isolation aka "history per session"
-    let history_session_id = if history.isolation {
+    // Every session gets a unique UUIDv7 session ID
+    let history_session_id = if engine_state.history_session_id.is_empty() {
         Reedline::create_history_session_id()
     } else {
-        None
+        Some(HistorySessionId::new(
+            engine_state.history_session_id.as_str(),
+        ))
     };
 
     if let Some(path) = history.file_path(&engine_state.config_dirs.config_home) {
@@ -1381,8 +1383,8 @@ fn kitty_protocol_healthcheck(engine_state: &EngineState) {
 fn store_history_id_in_engine(engine_state: &mut EngineState, line_editor: &Reedline) {
     let session_id = line_editor
         .get_history_session_id()
-        .map(i64::from)
-        .unwrap_or(0);
+        .map(|id| id.to_string())
+        .unwrap_or_default();
 
     engine_state.history_session_id = session_id;
 }
@@ -1713,7 +1715,7 @@ fn are_session_ids_in_sync() {
         history_session_id,
     );
     assert_eq!(
-        i64::from(line_editor.unwrap().get_history_session_id().unwrap()),
+        line_editor.unwrap().get_history_session_id().unwrap().to_string(),
         engine_state.history_session_id
     );
 }

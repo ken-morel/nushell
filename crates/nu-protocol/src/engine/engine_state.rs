@@ -136,7 +136,7 @@ pub struct EngineState {
     pub config_dirs: NushellConfigDirs,
 
     pub history_enabled: bool,
-    pub history_session_id: i64,
+    pub history_session_id: String,
     /// Whether the startup-only `$env.config.history.*` options are locked from further
     /// changes (currently `path`, `max_size`, `file_format`, `isolation`).
     ///
@@ -257,7 +257,7 @@ impl EngineState {
             plugins: vec![],
             config_dirs: NushellConfigDirs::empty(),
             history_enabled: true,
-            history_session_id: 0,
+            history_session_id: uuid::Uuid::now_v7().to_string(),
             history_locked_after_startup: false,
             file: None,
             regex_cache: Arc::new(Mutex::new(LruCache::new(

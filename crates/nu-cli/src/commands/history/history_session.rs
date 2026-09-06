@@ -15,7 +15,7 @@ impl Command for HistorySession {
     fn signature(&self) -> nu_protocol::Signature {
         Signature::build("history session")
             .category(Category::History)
-            .input_output_types(vec![(Type::Nothing, Type::Int)])
+            .input_output_types(vec![(Type::Nothing, Type::String)])
     }
 
     fn examples(&self) -> Vec<Example<'_>> {
@@ -33,6 +33,6 @@ impl Command for HistorySession {
         call: &Call,
         _input: PipelineData,
     ) -> Result<PipelineData, ShellError> {
-        Ok(Value::int(engine_state.history_session_id, call.head).into_pipeline_data())
+        Ok(Value::string(&engine_state.history_session_id, call.head).into_pipeline_data())
     }
 }
