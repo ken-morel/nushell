@@ -1352,6 +1352,9 @@ fn edit_from_record(
         Ok(ECD::CutTextObject) => EditCommand::CutTextObject {
             text_object: parse_text_object(record, config, span)?,
         },
+        Ok(ECD::SelectTextObject) => EditCommand::SelectTextObject {
+            text_object: parse_text_object(record, config, span)?,
+        },
         // The verb commands take a `MotionTarget` (and, for the operators, a
         // `Granularity`) parsed from the same record. See `parse_motion_target`.
         Ok(ECD::Move) => EditCommand::Move(parse_motion_target(record, config, span)?),
@@ -1508,6 +1511,7 @@ pub(crate) fn display_edit_command(edit: EditCommandDiscriminants) -> Option<&'s
         ECD::CopyAroundPair => "CopyAroundPair left: <char>, right <char>",
         ECD::CutTextObject => "CutTextObject scope: <string>, object_type: <string>",
         ECD::CopyTextObject => "CopyTextObject scope: <string>, object_type: <string>",
+        ECD::SelectTextObject => "SelectTextObject scope: <string>, object_type: <string>",
         ECD::Move => {
             "Move motion: <string>, direction: <string>, word_kind?: <string>, edge?: <string>, char?: <char>, stop?: <string>"
         }
